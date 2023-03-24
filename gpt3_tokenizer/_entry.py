@@ -1,6 +1,9 @@
+from builtins import str
+
 import regex
 
-from gpt3_tokenizer._functions import (_bpe, _bytes_to_unicode, _dict_zip,
+from gpt3_tokenizer._functions import (_DEFAULT_ENCODING, _bpe,
+                                       _bytes_to_unicode, _dict_zip,
                                        _encode_string, _get_bpe_merges,
                                        _init_encoder)
 
@@ -19,6 +22,8 @@ def encode(text):
         :type text: str
         :returns: an array of ints (tokens)
     """
+    if not isinstance(text, str):
+        text = text.decode(_DEFAULT_ENCODING)    
     bpe_tokens = []
     regex_compiled = regex.compile(_REGEX_PATTERN, regex.UNICODE)
     matches = regex_compiled.findall(text)

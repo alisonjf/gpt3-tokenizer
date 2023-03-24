@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gpt3_tokenizer"
-version = "0.1.1"
+version = "0.1.2"
 description = "Encoder/Decoder and tokens counter for GPT3"
 authors = ["Alison Ferrenha"]
 readme = "README.rst"
