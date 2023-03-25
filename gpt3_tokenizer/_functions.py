@@ -75,7 +75,7 @@ def _bpe(token, bpe_ranks):
         bigram = min_pairs[min(map(int, min_pairs.keys()))]
         if not bigram in bpe_ranks:
             break
-        bigram = bigram.split(',')
+        bigram = bigram.split(',', 1)
         first = bigram[0]
         second = bigram[1]
         new_word = []
