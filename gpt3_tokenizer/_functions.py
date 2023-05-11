@@ -28,9 +28,7 @@ def _get_bpe_merges():
 def _dict_zip(x, y):
     result = {}
     for i in y:
-        key = ','.join(x[i])
-        if not isinstance(key, str):
-            key = key.decode(_DEFAULT_ENCODING)
+        key = tuple(x[i])
         result[key] = y[i]
     return result
 
@@ -69,15 +67,16 @@ def _bpe(token, bpe_ranks):
     while True:
         min_pairs = {}
         for pair in pairs:
-            pair_key = ','.join(pair)
+            pair_key = tuple(pair)
             rank = bpe_ranks.get(pair_key, float("nan"))
             min_pairs[10e10 if math.isnan(rank) else rank] = pair_key
         bigram = min_pairs[min(map(int, min_pairs.keys()))]
         if not bigram in bpe_ranks:
             break
-        bigram = bigram.split(',', 1)
+        bigram = bigram[0], "".join(bigram[1:])
         first = bigram[0]
         second = bigram[1]
+
         new_word = []
         i = 0
 
