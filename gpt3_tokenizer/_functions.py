@@ -10,20 +10,23 @@ import six
 
 _DEFAULT_ENCODING = "utf-8"
 
+
 def _init_encoder():
-    with open(os.path.join(os.path.dirname(__file__), 'data/encoder.json'), 'r') as f:
+    with open(os.path.join(os.path.dirname(__file__), "data/encoder.json"), "r", encoding=_DEFAULT_ENCODING) as f:
         encoder = json.load(f)
         return encoder
 
+
 def _get_bpe_merges():
-    with open(os.path.join(os.path.dirname(__file__), "data/vocab.bpe"), "r") as f:
-        bpe_lines = f.readlines()    
-        sliced = bpe_lines[1:len(bpe_lines)-1]
+    with open(os.path.join(os.path.dirname(__file__), "data/vocab.bpe"), "r", encoding=_DEFAULT_ENCODING) as f:
+        bpe_lines = f.readlines()
+        sliced = bpe_lines[1 : len(bpe_lines) - 1]
         bpe_merges = [regex.split(r"(\s+)", s) for s in sliced]
         final_merges = []
         for merge in bpe_merges:
             final_merges.append([m for m in merge if len(m.strip()) > 0])
         return final_merges
+
 
 def _dict_zip(x, y):
     result = {}
@@ -32,20 +35,25 @@ def _dict_zip(x, y):
         result[key] = y[i]
     return result
 
+
 cache = {}
+
 
 def _encode_string(token):
     return [str(t) for t in list(bytearray(token.encode(_DEFAULT_ENCODING)))]
 
+
 def _range(x, y):
     res = [val for val in range(y)][x:]
     return res
+
 
 def _ord(x):
     if not isinstance(x, str):
         x = x.decode(_DEFAULT_ENCODING)
     res = ord(x[0])
     return res
+
 
 def _get_pairs(word):
     pairs = []
@@ -55,6 +63,7 @@ def _get_pairs(word):
         pairs.append([prev_char, ch])
         prev_char = ch
     return pairs
+
 
 def _bpe(token, bpe_ranks):
     if token in cache:
@@ -91,8 +100,8 @@ def _bpe(token, bpe_ranks):
                 break
             new_word.extend(word[i:j])
             i = j
-            if word[i] == first and i < len(word)-1 and word[i+1] == second:
-                new_word.append(first+second)
+            if word[i] == first and i < len(word) - 1 and word[i + 1] == second:
+                new_word.append(first + second)
                 i += 2
             else:
                 new_word.append(word[i])
@@ -102,21 +111,23 @@ def _bpe(token, bpe_ranks):
         if len(word) == 1:
             break
         pairs = _get_pairs(word)
-    
-    word = ' '.join(word)
+
+    word = " ".join(word)
     cache[token] = word
     return word
 
 
 def _bytes_to_unicode():
-    bs = list(chain(_range(_ord('!'), _ord('~') + 1), _range(_ord('¡'), _ord('¬') + 1), _range(_ord('®'), _ord('ÿ') + 1)))
+    bs = list(
+        chain(_range(_ord("!"), _ord("~") + 1), _range(_ord("¡"), _ord("¬") + 1), _range(_ord("®"), _ord("ÿ") + 1))
+    )
     cs = bs[:]
     n = 0
     b = 0
-    while b < 2 ** 8:
+    while b < 2**8:
         if not b in bs:
             bs.append(b)
-            cs.append(2 ** 8 + n)
+            cs.append(2**8 + n)
             n += 1
         b += 1
 

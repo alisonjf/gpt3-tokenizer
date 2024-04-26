@@ -23,21 +23,17 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
-include = [
-    "LICENSE",
-]
+include = ["LICENSE"]
 
-packages = [
-    { include = "gpt3_tokenizer" },
-]
+packages = [{ include = "gpt3_tokenizer" }]
 
 [tool.poetry.dependencies]
-python = ">=2.7"
+python = ">=2.7,<3.0.dev0 || >=3.3.dev0"
 future = "^0.18.3"
 six = "^1.16.0"
-regex  = [
+regex = [
     { version = "2021.11.10", python = "<3" },
-    { version = "*", python = ">=3" }
+    { version = "*", python = ">=3" },
 ]
 
 [build-system]

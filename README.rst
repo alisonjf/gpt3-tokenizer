@@ -3,7 +3,7 @@ gpt3_tokenizer
 | An `OpenAI`_ GPT3 helper library for encoding/decoding strings and counting tokens.
 | Counting tokens gives the same output as OpenAI's `tokenizer`_
 |
-| Tested with versions: **2.7.12**, **2.7.18** and all **3.x.x** versions
+| Supported python versions: **>=2.7 <3.0** OR **>=3.3**
 
 Installing
 --------------
