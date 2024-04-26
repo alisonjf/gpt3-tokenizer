@@ -4,6 +4,7 @@ gpt3_tokenizer
 | Counting tokens gives the same output as OpenAI's `tokenizer`_
 |
 | Supported python versions: **>=2.7 <3.0** OR **>=3.3**
+| Tested on: **Windows**, **Linux** and **MacOS**
 
 Installing
 --------------
